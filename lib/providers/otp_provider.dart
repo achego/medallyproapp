@@ -17,6 +17,13 @@ class OtpNotifier with ChangeNotifier {
   User? get user => _user;
 
   Future<void> signInWithPhoneNumber(String phoneNumber, context) async {
+     Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OtpScreen(verificationId: '123456'),
+            ),
+          );
+          return;
     try {
       await _auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,

@@ -88,6 +88,7 @@ class NotificationServices {
 
   Future<void> scheduleNotification(
       List<tz.TZDateTime?> notificationTimes, String title, String body) async {
+        
     const AndroidNotificationDetails androidNotificationDetails =
     AndroidNotificationDetails(
       'channelId',
@@ -102,7 +103,8 @@ class NotificationServices {
 
     for (int i = 0; i < notificationTimes.length; i++) {
       tz.TZDateTime? scheduledTime = notificationTimes[i];
-
+print(scheduledTime.toString());
+      print('===========================');
       if (scheduledTime!.isBefore(now)) {
         print("Skipping notification at $scheduledTime as it is in the past.");
         continue; // Skip scheduling if it's in the past
@@ -112,7 +114,7 @@ class NotificationServices {
         i,
         title,
         body,
-        scheduledTime!,
+        scheduledTime,
         notificationDetails,
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
@@ -121,6 +123,33 @@ class NotificationServices {
 
       print("Scheduled $title at $scheduledTime");
     }
+  }
+  Future<void> newcheduleNotification(
+      tz.TZDateTime notificationTime, String title, String body) async {
+    const AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+      'channelId',
+      'channelName',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+
+    const NotificationDetails notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
+    DateTime now = DateTime.now();
+    await _flutterLocalNotificationsPlugin.zonedSchedule(
+      int.parse(
+          DateTime.now().microsecondsSinceEpoch.toString().substring(0, 4)),
+      title,
+      body,
+      notificationTime,
+      notificationDetails,
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+    );
+
+    print("Scheduled $title at $notificationTime");
   }
 
 

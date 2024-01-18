@@ -124,8 +124,8 @@ class _OtpScreenState extends State<OtpScreen> {
                 onTap: () async {
                   try {
                     String enteredOtp = otpControllers.map((controller) => controller.text).join();
-                    PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: widget.verificationId!, smsCode: enteredOtp);
-                    await FirebaseAuth.instance.signInWithCredential(credential);
+                    // PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: widget.verificationId!, smsCode: enteredOtp);
+                    // await FirebaseAuth.instance.signInWithCredential(credential);
                     // Set login status to true
                     await AuthManager.setLoggedIn(true);
                     Navigator.pushReplacement(
